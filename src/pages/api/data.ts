@@ -51,23 +51,23 @@ export default function handler(
         ],
       },
       {
-        name: 'No English no Brain',
+        name: 'Cerâmica milionária',
         lessons: [
           {
             id: 'WmV31ypcc3w',
-            name: 'Esse video é brabo!',
+            name: 'como fazer jarros que CUSTAM MILHÕES',
           },
           {
             id: 'sMpyCkKuDU',
-            name: 'treine seu ouvido e saia do Intermediate',
+            name: 'GANHE DINHEIRO BRINCANDO COM LAMA!!',
           },
           {
             id: 'yzycUfVwXi0',
-            name: '1 HORA de LISTENING sem dó',
+            name: 'COMO EU USEI LAMA E FIQUEI RICA!!',
           },
           {
             id: 'dra6Dxp-2Xk',
-            name: 'Vixi... se fosse tu clicava agora!!!',
+            name: 'QUEBRE SEU VASO E FIQUE MILIONÁRIA HOJE!!',
           },
         ],
       },
