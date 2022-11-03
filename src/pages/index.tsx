@@ -1,9 +1,23 @@
-export default function Home({ data }: any) {
+import Link from 'next/link'
+import { _Data } from '../utils/@types/_Data'
+
+interface Props {
+  data: _Data
+}
+
+export default function Home({ data }: Props) {
   return (
-    <div className="flex flex-wrap p-6">
-      <div>
-        <h2>{JSON.stringify(data)} </h2>
-      </div>
+    <div className="flex flex-wrap p-6 gap-6">
+      {data.courses.map((v, i) => (
+        <Link href={'/course/' + v.name}>
+          <div
+            className="flex justify-center items-center  h-52 w-32 text-center bg-slate-500"
+            key={i}
+          >
+            <h2>{v.name}</h2>
+          </div>
+        </Link>
+      ))}
     </div>
   )
 }
