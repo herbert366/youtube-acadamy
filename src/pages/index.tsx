@@ -11,7 +11,7 @@ export default function Home({ data }: Props) {
       {data.courses.map((v, i) => (
         <Link href={'/course/' + v.name}>
           <div
-            className="flex justify-center items-center  h-52 w-32 text-center bg-slate-500"
+            className="flex justify-center items-center  h-52 w-32 text-center bg-slate-700 rounded-xl"
             key={i}
           >
             <h2>{v.name}</h2>
