@@ -1,29 +1,37 @@
 import Link from 'next/link'
-import { _Data } from '../utils/@types/_Data'
 
 interface Props {
-  data: _Data
+  data: {
+    id: number
+    name: string
+  }[]
 }
 
 export default function Home({ data }: Props) {
   return (
-    <div className="flex flex-wrap p-6 gap-6">
-      {data.courses.map((v, i) => (
-        <Link href={'/course/' + v.name}>
-          <div
-            className="flex justify-center items-center  h-52 w-32 text-center bg-slate-700 rounded-xl"
-            key={i}
-          >
-            <h2>{v.name}</h2>
-          </div>
-        </Link>
-      ))}
+    <div className="flex items-center min-h-[92.6vh] min-w-full flex-col">
+      <main className="w-[90%] space-y-5 mt-5">
+        <h1 className="text-3xl font-bold">Courses:</h1>
+        <div className="flex flex-wrap p-6 gap-6 bg-zinc-800  h-fit">
+          {data.map((v, i) => (
+            <Link href={'/course/' + v.id}>
+              <div
+                className="flex justify-center items-center  h-52 w-32 text-center bg-slate-700 rounded-xl"
+                key={i}
+              >
+                <h2>{v.name}</h2>
+              </div>
+            </Link>
+          ))}
+        </div>
+      </main>
     </div>
   )
 }
 
 export async function getServerSideProps() {
-  const response = await fetch('http://localhost:3000/api/data')
+  const response = await fetch('http://localhost:4000/courses')
+  console.log(response)
   const data = await response.json()
 
   return {

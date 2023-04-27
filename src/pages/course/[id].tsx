@@ -1,26 +1,56 @@
 import { useState } from 'react'
 import Video from '../../components/Video'
-import { _Course, _Data, _Lesson } from '../../utils/@types/_Data'
+import { _Data } from '../../utils/@types/_Data'
 
-export default function Course({ course }: { course: _Course }) {
-  const [vidData, setVidData] = useState<_Lesson>(course.lessons[0])
+type Lesson = {
+  id: number
+  courseId: number
+  videoId: string
+  name: string
+  progress?: number
+}
+
+export default function Course({ lessons }: { lessons: Lesson[] }) {
+  const [vidData, setVidData] = useState<Lesson>(lessons?.[0])
 
   return (
-    <div className="w-full min-h-screen flex justify-center gap-6 p-6 flex-wrap bg-zinc-900">
-      <section className="flex flex-wrap bg-black w-[600px] h-[280px] rounded-xl justify-center overflow-hidden">
-        <Video id={vidData.id} />
-        <p>Carregando...</p>
+    <div className="w-full min-h-[92.6vh] flex justify-center gap-6 p-6 flex-wrap bg-zinc-900">
+      <section className="flex flex-[0.6] h-fit flex-wrap bg-zinc-800 rounded-xl justify-center overflow-hidden p-4">
+        <Video id={vidData.videoId} />
       </section>
-      <section className="flex flex-[0.7] p-6 flex-col gap-5 bg-zinc-800 rounded-xl">
-        {course.lessons.map((v, i) => (
+      <section className="flex flex-[0.3] p-6 flex-col gap-5 bg-zinc-800 rounded-xl">
+        {lessons.map((v, i) => (
           <div
+            key={i}
+            onClick={() => setVidData(v)}
             className={`rounded-xl ${
-              vidData.id === v.id ? 'bg-red-700' : 'bg-zinc-600'
-            }  p-2 hover:bg-red-600 hover:cursor-pointer transition-all hover:scale-105 flex gap-2 items-center`}
+              vidData.id === v.id ? 'bg-red-900' : 'bg-zinc-700'
+            }  overflow-hidden  hover:bg-red-800 hover:cursor-pointer transition-all hover:scale-105 flex gap-2 items-center`}
           >
-            <span className="bg-zinc-500 rounded-xl px-2 py-1">{i + 1}</span>
-            <div className=" " onClick={() => setVidData(v)}>
-              {v.name}
+            <span className="bg-zinc-600/50 h-full w-7 flex justify-center items-center font-bold">
+              {i + 1}
+            </span>
+            <div className="p-2 flex gap-3  w-full">
+              <div className="w-24">
+                <img
+                  src={`https://img.youtube.com/vi/${v.videoId}/sddefault.jpg`}
+                  alt=""
+                />
+              </div>
+              <div className="flex flex-col gap-4 w-full">
+                <div className=" ">{v.name}</div>
+                <div className="h-4 w-[95%] bg-zinc-500 rounded-lg overflow-hidden">
+                  <div
+                    className=" h-full bg-red-400"
+                    style={{
+                      width:
+                        typeof v.progress === 'number'
+                          ? v.progress * 100 + '%'
+                          : '50%',
+                    }}
+                  ></div>
+                </div>
+              </div>
             </div>
           </div>
         ))}
@@ -30,10 +60,12 @@ export default function Course({ course }: { course: _Course }) {
 }
 
 export async function getServerSideProps({ query }: any) {
-  const response = await fetch('http://localhost:3000/api/data')
+  const response = await fetch(
+    'http://localhost:4000/lessons?courseId=' + query.id
+  )
   const data: _Data = await response.json()
 
   return {
-    props: { course: data.courses.find(v => v.name === query.id) }, // will be passed to the page component as props
+    props: { lessons: data }, // will be passed to the page component as props
   }
 }
