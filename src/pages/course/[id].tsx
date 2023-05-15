@@ -1,13 +1,12 @@
 import { useRouter } from 'next/router'
 import { useState } from 'react'
-import { AiFillDelete } from 'react-icons/ai'
-import { IoAddCircleSharp } from 'react-icons/io5'
 import Video from '../../components/Video'
-import CrudForm from '../../core/CrudForm'
+import CreateButton from '../../core/CreateButton'
+import DeleteButton from '../../core/DeleteButton'
+import EditButton from '../../core/EditButton'
 import { useLessons } from '../../hooks/useLessons'
 
 export default function Course() {
-  const [showForm, setShowForm] = useState(false)
   const router = useRouter()
   const { data: lessons } = useLessons().get({
     params: { course_id: Number(router.query.id as string) },
@@ -15,6 +14,7 @@ export default function Course() {
   const deleteLesson = useLessons().delete
 
   const createLesson = useLessons().create
+  const updateLesson = useLessons().update
 
   const [indexSelected, setIndexSelected] = useState(0)
 
@@ -28,39 +28,27 @@ export default function Course() {
         <Video id={vidData?.videoId} />
       </section>
       <section className="flex flex-[0.3] p-6 flex-col gap-5 bg-zinc-800 rounded-xl">
-        {!showForm && (
-          <button
-            onClick={() => setShowForm(true)}
-            className="p-2 bg-red-500 rounded-xl flex justify-center items-center gap-3"
-          >
-            <span>Adicionar Aula</span>
-            <IoAddCircleSharp size={30} />
-          </button>
-        )}
-        {showForm && (
-          <CrudForm
-            title="Add lesson"
-            data={{
-              videoId: { type: 'text' },
-              name: { type: 'text' },
-              course_id: {
-                initialValue: router.query.id as string,
-                type: 'number',
-                hide: true,
-              },
-            }}
-            onSubmit={(v: any) => {
-              createLesson({
-                ...v,
-                videoId: v?.videoId
-                  .replace(/.*\?v=/i, '')
-                  .replace(/.*youtu\.be\//i, ''),
-              })
-              setShowForm(false)
-            }}
-            onRequestClose={() => setShowForm(false)}
-          />
-        )}
+        <CreateButton
+          data={{
+            videoId: { type: 'text' },
+            name: { type: 'text' },
+            course_id: {
+              initialValue: router.query.id as string,
+              type: 'number',
+              hide: true,
+            },
+          }}
+          title="Adicionar Aula"
+          onSubmit={(v: any) => {
+            createLesson({
+              ...v,
+              videoId: v?.videoId
+                .replace(/.*\?v=/i, '')
+                .replace(/.*youtu\.be\//i, ''),
+            })
+          }}
+        />
+
         {lessons.map((v, i) => (
           <div
             key={i}
@@ -69,11 +57,15 @@ export default function Course() {
               vidData.id === v.id ? 'bg-blue-900' : 'bg-zinc-700'
             }  overflow-hidden  hover:bg-blue-800 hover:cursor-pointer transition-all hover:scale-105 flex gap-2 items-center group`}
           >
-            <AiFillDelete
-              size={25}
-              className="fill-zinc-200 absolute top-2 right-2 hidden group-hover:block hover:fill-red-500"
-              onClick={() => {
-                deleteLesson(v.id)
+            <DeleteButton onDelete={() => deleteLesson(v.id)} />
+            <EditButton
+              title="Editar Aula"
+              data={{
+                videoId: { type: 'text' },
+                name: { type: 'text' },
+              }}
+              onSubmit={(v: any) => {
+                updateLesson(v.id, v)
               }}
             />
 

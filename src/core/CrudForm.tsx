@@ -6,7 +6,7 @@ type Data = {
   block?: boolean
 }
 
-type DataObj = Record<
+export type DataObj = Record<
   string,
   { initialValue?: unknown; type: string; block?: boolean; hide?: boolean }
 >
