@@ -1,11 +1,14 @@
 import type { AppProps } from 'next/app'
 import Link from 'next/link'
 import { BsYoutube } from 'react-icons/bs'
+import { QueryClient, QueryClientProvider } from 'react-query'
 import '../styles/globals.css'
+
+export const queryClient = new QueryClient()
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
-    <div>
+    <QueryClientProvider client={queryClient}>
       <header className="flex gap-4 p-4 justify-start items-center bg-zinc-800/50">
         <Link href={'/'}>
           <div className="flex justify-center items-center group">
@@ -21,6 +24,6 @@ export default function App({ Component, pageProps }: AppProps) {
         </Link>
       </header>
       <Component {...pageProps} />
-    </div>
+    </QueryClientProvider>
   )
 }

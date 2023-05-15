@@ -3,21 +3,24 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "next dev -p 3032",
+    "back": "node server.js",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint",
-    "back": "json-server --watch db.json --port 4000"
+    "lint": "next lint"
   },
   "dependencies": {
     "@types/node": "18.11.9",
     "@types/react": "18.0.24",
     "@types/react-dom": "18.0.8",
+    "axios": "^1.4.0",
+    "dotenv": "^16.0.3",
     "json-server": "^0.17.3",
     "next": "13.0.1",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-icons": "^4.8.0",
+    "react-query": "^3.39.3",
     "typescript": "4.8.4"
   },
   "devDependencies": {

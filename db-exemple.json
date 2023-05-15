@@ -19,80 +19,80 @@
   "lessons": [
     {
       "id": 1,
-      "courseId": 1,
+      "course_id": 1,
       "videoId": "WmV31ypcc3w",
       "name": "Esse video é brabo!"
     },
     {
       "id": 2,
-      "courseId": 1,
+      "course_id": 1,
       "videoId": "sMpyCkKuDU",
       "name": "treine seu ouvido e saia do Intermediate"
     },
     {
       "id": 3,
-      "courseId": 1,
+      "course_id": 1,
       "videoId": "yzycUfVwXi0",
       "name": "1 HORA de LISTENING sem dó"
     },
     {
       "id": 4,
-      "courseId": 1,
+      "course_id": 1,
       "videoId": "dra6Dxp-2Xk",
       "name": "Vixi... se fosse tu clicava agora!!!"
     },
     {
       "id": 5,
-      "courseId": 2,
+      "course_id": 2,
       "videoId": "TVIZoqBjwNQ",
       "name": "é assim que começa..."
     },
     {
       "id": 6,
-      "courseId": 2,
+      "course_id": 2,
       "videoId": "Tbpn64yUG7c",
       "name": "Como fazer as coisas!"
     },
     {
       "id": 7,
-      "courseId": 2,
+      "course_id": 2,
       "videoId": "yzycUfVwXi0",
       "name": "só sai desse video entendendo Regex"
     },
     {
       "id": 8,
-      "courseId": 2,
+      "course_id": 2,
       "videoId": "dra6Dxp-2Xk",
       "name": "só assista e depois me agradeça..."
     },
     {
       "id": 9,
-      "courseId": 3,
+      "course_id": 3,
       "videoId": "WmV31ypcc3w",
       "name": "como fazer jarros que CUSTAM MILHÕES"
     },
     {
       "id": 10,
-      "courseId": 3,
+      "course_id": 3,
       "videoId": "KMXNLu0MM6s",
       "name": "GANHE DINHEIRO BRINCANDO COM LAMA!!"
     },
     {
       "id": 11,
-      "courseId": 3,
+      "course_id": 3,
       "videoId": "yzycUfVwXi0",
       "name": "COMO EU USEI LAMA E FIQUEI RICA!!"
     },
     {
       "id": 12,
-      "courseId": 3,
+      "course_id": 3,
       "videoId": "dra6Dxp-2Xk",
       "name": "QUEBRE SEU VASO E FIQUE MILIONÁRIA HOJE!!",
       "progress": 0.8
     },
     {
       "id": 13,
-      "courseId": 3,
+      "course_id": 3,
       "videoId": "ogUnaZrClGs",
       "name": "Como era os jogos antigamente",
       "progress": 0.3

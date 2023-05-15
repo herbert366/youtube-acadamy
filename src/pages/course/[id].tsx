@@ -1,17 +1,19 @@
+import { useRouter } from 'next/router'
 import { useState } from 'react'
 import Video from '../../components/Video'
-import { _Data } from '../../utils/@types/_Data'
+import { useLessons } from '../../hooks/useLessons'
 
-type Lesson = {
-  id: number
-  courseId: number
-  videoId: string
-  name: string
-  progress?: number
-}
+export default function Course() {
+  const router = useRouter()
+  const { data: lessons } = useLessons().get({
+    params: { course_id: Number(router.query.id as string) },
+  })
 
-export default function Course({ lessons }: { lessons: Lesson[] }) {
-  const [vidData, setVidData] = useState<Lesson>(lessons?.[0])
+  const [indexSelected, setIndexSelected] = useState(0)
+
+  if (!lessons) return null
+
+  const vidData = lessons[indexSelected]
 
   return (
     <div className="w-full min-h-[92.6vh] flex justify-center gap-6 p-6 flex-wrap bg-zinc-900">
@@ -22,7 +24,7 @@ export default function Course({ lessons }: { lessons: Lesson[] }) {
         {lessons.map((v, i) => (
           <div
             key={i}
-            onClick={() => setVidData(v)}
+            onClick={() => setIndexSelected(i)}
             className={`rounded-xl ${
               vidData.id === v.id ? 'bg-red-900' : 'bg-zinc-700'
             }  overflow-hidden  hover:bg-red-800 hover:cursor-pointer transition-all hover:scale-105 flex gap-2 items-center`}
@@ -57,15 +59,4 @@ export default function Course({ lessons }: { lessons: Lesson[] }) {
       </section>
     </div>
   )
-}
-
-export async function getServerSideProps({ query }: any) {
-  const response = await fetch(
-    'http://localhost:4000/lessons?courseId=' + query.id
-  )
-  const data: _Data = await response.json()
-
-  return {
-    props: { lessons: data }, // will be passed to the page component as props
-  }
 }
