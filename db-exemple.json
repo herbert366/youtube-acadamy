@@ -14,6 +14,21 @@
       "id": 3,
       "poster": "",
       "name": "Videos incríveis"
+    },
+    {
+      "name": "google.com",
+      "poster": "https://docs.blender.org/manual/pt/dev/_images/getting-started_about_introduction_screenshot.jpg",
+      "id": 4
+    },
+    {
+      "name": "caio",
+      "poster": "https://docs.blender.org/manual/pt/dev/_images/getting-started_about_introduction_screenshot.jpg",
+      "id": 5
+    },
+    {
+      "name": "animação",
+      "poster": "",
+      "id": 6
     }
   ],
   "lessons": [
@@ -96,6 +111,24 @@
       "videoId": "ogUnaZrClGs",
       "name": "Como era os jogos antigamente",
       "progress": 0.3
+    },
+    {
+      "course_id": "6",
+      "videoId": "y3B8YqeLCpY",
+      "name": "AUTOMATIC LIP-SYNCING",
+      "id": 14
+    },
+    {
+      "course_id": "6",
+      "videoId": "h7U2YvmIMOo",
+      "name": "An introduction to lip sync (and mouth shapes) - Animation Theory",
+      "id": 15
+    },
+    {
+      "course_id": "6",
+      "videoId": "onAd_EA3ils",
+      "name": "Lip Sync Test / Animation Step By Step",
+      "id": 19
     }
   ]
 }

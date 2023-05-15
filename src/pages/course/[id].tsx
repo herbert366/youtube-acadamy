@@ -1,13 +1,17 @@
 import { useRouter } from 'next/router'
 import { useState } from 'react'
 import Video from '../../components/Video'
+import CrudForm from '../../core/CrudForm'
 import { useLessons } from '../../hooks/useLessons'
 
 export default function Course() {
+  const [showForm, setShowForm] = useState(false)
   const router = useRouter()
   const { data: lessons } = useLessons().get({
     params: { course_id: Number(router.query.id as string) },
   })
+
+  const createLesson = useLessons().create
 
   const [indexSelected, setIndexSelected] = useState(0)
 
@@ -18,7 +22,39 @@ export default function Course() {
   return (
     <div className="w-full min-h-[92.6vh] flex justify-center gap-6 p-6 flex-wrap bg-zinc-900">
       <section className="flex flex-[0.6] h-fit flex-wrap bg-zinc-800 rounded-xl justify-center overflow-hidden p-4">
-        <Video id={vidData.videoId} />
+        <Video id={vidData?.videoId} />
+        {!showForm && (
+          <button
+            onClick={() => setShowForm(true)}
+            className="p-2 bg-red-500 rounded-xl"
+          >
+            Adicionar Aula
+          </button>
+        )}
+        {showForm && (
+          <CrudForm
+            title="Add lesson"
+            data={{
+              course_id: {
+                initialValue: router.query.id as string,
+                type: 'number',
+                block: true,
+              },
+              videoId: { initialValue: '', type: 'text' },
+              name: { initialValue: '', type: 'text' },
+            }}
+            onSubmit={(v: any) => {
+              createLesson({
+                ...v,
+                videoId: v?.videoId
+                  .replace(/.*\?v=/i, '')
+                  .replace(/.*youtu\.be\//i, ''),
+              })
+              setShowForm(false)
+            }}
+            onRequestClose={() => setShowForm(false)}
+          />
+        )}
       </section>
       <section className="flex flex-[0.3] p-6 flex-col gap-5 bg-zinc-800 rounded-xl">
         {lessons.map((v, i) => (

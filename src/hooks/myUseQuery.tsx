@@ -1,6 +1,7 @@
 import { QueryKey, useQuery } from 'react-query'
 
 import axios from 'axios'
+import { queryClient } from '../pages/_app'
 
 export default function dictToQuery<T>(options?: Partial<T>) {
   const optionsQuery =
@@ -66,26 +67,20 @@ export function myUseQuery<Type extends { id: unknown }>({
   }
 
   function useDelete(id: Type['id']) {
-    return useQuery([pluralLabel], async () => {
-      const { data } = await axiosApi.delete(`/${pluralLabel}/${id}`)
-      return data
+    axiosApi.delete(`/${pluralLabel}/${id}`).then(() => {
+      queryClient.invalidateQueries([pluralLabel])
     })
   }
 
   function useUpdate(id: Type['id'], updatedData: Partial<Type>) {
-    return useQuery([pluralLabel], async () => {
-      const { data } = await axiosApi.patch(
-        `/${pluralLabel}/${id}`,
-        updatedData
-      )
-      return data
+    axiosApi.patch(`/${pluralLabel}/${id}`, updatedData).then(() => {
+      queryClient.invalidateQueries([pluralLabel])
     })
   }
 
   function useCreate(dataCreate: Partial<Type>) {
-    return useQuery([pluralLabel], async () => {
-      const { data } = await axiosApi.post(`/${pluralLabel}`, dataCreate)
-      return data
+    axiosApi.post(`/${pluralLabel}`, dataCreate).then(() => {
+      queryClient.invalidateQueries([pluralLabel])
     })
   }
 

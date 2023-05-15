@@ -1,13 +1,27 @@
 import Link from 'next/link'
+import CrudForm from '../core/CrudForm'
 import { useCourses } from '../hooks/useCourses'
 
 interface Props {}
 
 export default function Home({}: Props) {
   const { data: courses } = useCourses().get()
+  const createCourse = useCourses().create
+
   return (
     <div className="flex items-center min-h-[92.6vh] min-w-full flex-col">
       <main className="w-[90%] space-y-5 mt-5">
+        <CrudForm
+          isCol={false}
+          title="Add course"
+          data={{
+            name: { initialValue: '', type: 'text' },
+            poster: { initialValue: '', type: 'text' },
+          }}
+          onSubmit={v => {
+            createCourse(v)
+          }}
+        />
         <h1 className="text-3xl font-bold">Courses:</h1>
         <div className="flex flex-wrap p-6 gap-6 bg-zinc-800  h-fit">
           {courses?.map((v, i) => (
