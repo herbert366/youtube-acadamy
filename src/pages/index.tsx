@@ -44,11 +44,14 @@ export default function Home({}: Props) {
                 }}
               />
               <Link href={'/course/' + course.id}>
-                <div
-                  className="flex justify-center items-center  h-52 w-32 text-center bg-slate-700 rounded-xl"
-                  key={i}
-                >
-                  <h2>{course.name}</h2>
+                <div className="w-52 bg-slate-700 min-h-full text-xl">
+                  <img src={course.poster} alt="" className="w-full" />
+                  <div
+                    className="flex justify-center items-center   text-center  rounded-xl"
+                    key={i}
+                  >
+                    <h2>{course.name}</h2>
+                  </div>
                 </div>
               </Link>
             </div>
