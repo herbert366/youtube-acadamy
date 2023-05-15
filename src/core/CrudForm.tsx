@@ -32,7 +32,7 @@ export default function CrudForm({
 
   return (
     <div
-      className="fixed top-0 left-0 z-20 w-screen h-screen bg-slate-900/80"
+      className="fixed top-0 left-0 z-40 w-screen h-screen bg-slate-900/80"
       onClick={onRequestClose}
     >
       <div
@@ -67,7 +67,11 @@ export default function CrudForm({
                   <Field name={key} type={type} key={key} disable={true} />
                 </div>
               ))}
-            <button type="submit" className="bg-green-800/60 p-2">
+            <button
+              type="submit"
+              className="bg-green-800/60 p-2"
+              // onClick={onRequestClose}
+            >
               Submit
             </button>
           </Form>

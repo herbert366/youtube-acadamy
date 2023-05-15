@@ -29,6 +29,16 @@
       "name": "animação",
       "poster": "",
       "id": 6
+    },
+    {
+      "name": "Aprender a desenhar",
+      "poster": "",
+      "id": 7
+    },
+    {
+      "name": "aprender a cozinhar",
+      "poster": "",
+      "id": 8
     }
   ],
   "lessons": [
@@ -129,6 +139,18 @@
       "videoId": "onAd_EA3ils",
       "name": "Lip Sync Test / Animation Step By Step",
       "id": 19
+    },
+    {
+      "videoId": "d-cpV7o5V9k",
+      "name": "Mais simples impossivel",
+      "course_id": "8",
+      "id": 20
+    },
+    {
+      "videoId": "bZc0fitk2YA",
+      "name": "bolo profissional",
+      "course_id": "8",
+      "id": 21
     }
   ]
 }

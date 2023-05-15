@@ -35,8 +35,8 @@ export default function Course() {
           <CrudForm
             title="Add lesson"
             data={{
-              videoId: { initialValue: '', type: 'text' },
-              name: { initialValue: '', type: 'text' },
+              videoId: { type: 'text' },
+              name: { type: 'text' },
               course_id: {
                 initialValue: router.query.id as string,
                 type: 'number',
