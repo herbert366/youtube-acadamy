@@ -26,29 +26,29 @@ export default function Home({}: Props) {
         />
         <h1 className="text-3xl font-bold">Courses:</h1>
         <div className="flex flex-wrap p-6 gap-6 bg-zinc-800  h-fit">
-          {courses?.map((v, i) => (
+          {courses?.map((course, i) => (
             <div className="group relative">
               <DeleteButton
                 onDelete={() => {
-                  deleteCourse(v.id)
+                  deleteCourse(course.id)
                 }}
               />
               <EditButton
                 title="Edit course"
                 data={{
-                  name: { initialValue: '', type: 'text' },
-                  poster: { initialValue: '', type: 'text' },
+                  name: { initialValue: course.name, type: 'text' },
+                  poster: { initialValue: course.poster, type: 'text' },
                 }}
-                onSubmit={v => {
-                  updateCourse(v.id, v)
+                onSubmit={data => {
+                  updateCourse(course.id, data)
                 }}
               />
-              <Link href={'/course/' + v.id}>
+              <Link href={'/course/' + course.id}>
                 <div
                   className="flex justify-center items-center  h-52 w-32 text-center bg-slate-700 rounded-xl"
                   key={i}
                 >
-                  <h2>{v.name}</h2>
+                  <h2>{course.name}</h2>
                 </div>
               </Link>
             </div>
