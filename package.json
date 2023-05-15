@@ -6,9 +6,9 @@
     "dev": "next dev -p 3032",
     "back": "node server.js",
     "build": "next build",
-    "start": "next start",
+    "start": "next start -p 3032",
     "lint": "next lint",
-    "dev-back": "concurrently \"next dev -p 3032\" \"node server.js\""
+    "front-back": "concurrently \"next start -p 3032\" \"node server.js\""
   },
   "dependencies": {
     "@types/node": "18.11.9",
