@@ -7,7 +7,8 @@
     "back": "node server.js",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "dev-back": "concurrently \"next dev -p 3032\" \"node server.js\""
   },
   "dependencies": {
     "@types/node": "18.11.9",
@@ -26,6 +27,7 @@
   },
   "devDependencies": {
     "autoprefixer": "^10.4.13",
+    "concurrently": "^8.0.1",
     "postcss": "^8.4.18",
     "tailwindcss": "^3.2.1"
   }

@@ -1,5 +1,7 @@
 import { useRouter } from 'next/router'
 import { useState } from 'react'
+import { AiFillDelete } from 'react-icons/ai'
+import { IoAddCircleSharp } from 'react-icons/io5'
 import Video from '../../components/Video'
 import CrudForm from '../../core/CrudForm'
 import { useLessons } from '../../hooks/useLessons'
@@ -10,6 +12,7 @@ export default function Course() {
   const { data: lessons } = useLessons().get({
     params: { course_id: Number(router.query.id as string) },
   })
+  const deleteLesson = useLessons().delete
 
   const createLesson = useLessons().create
 
@@ -23,12 +26,15 @@ export default function Course() {
     <div className="w-full min-h-[92.6vh] flex justify-center gap-6 p-6 flex-wrap bg-zinc-900">
       <section className="flex flex-[0.6] h-fit flex-wrap bg-zinc-800 rounded-xl justify-center overflow-hidden p-4">
         <Video id={vidData?.videoId} />
+      </section>
+      <section className="flex flex-[0.3] p-6 flex-col gap-5 bg-zinc-800 rounded-xl">
         {!showForm && (
           <button
             onClick={() => setShowForm(true)}
-            className="p-2 bg-red-500 rounded-xl"
+            className="p-2 bg-red-500 rounded-xl flex justify-center items-center gap-3"
           >
-            Adicionar Aula
+            <span>Adicionar Aula</span>
+            <IoAddCircleSharp size={30} />
           </button>
         )}
         {showForm && (
@@ -55,16 +61,22 @@ export default function Course() {
             onRequestClose={() => setShowForm(false)}
           />
         )}
-      </section>
-      <section className="flex flex-[0.3] p-6 flex-col gap-5 bg-zinc-800 rounded-xl">
         {lessons.map((v, i) => (
           <div
             key={i}
             onClick={() => setIndexSelected(i)}
             className={`rounded-xl ${
-              vidData.id === v.id ? 'bg-red-900' : 'bg-zinc-700'
-            }  overflow-hidden  hover:bg-red-800 hover:cursor-pointer transition-all hover:scale-105 flex gap-2 items-center`}
+              vidData.id === v.id ? 'bg-blue-900' : 'bg-zinc-700'
+            }  overflow-hidden  hover:bg-blue-800 hover:cursor-pointer transition-all hover:scale-105 flex gap-2 items-center group`}
           >
+            <AiFillDelete
+              size={25}
+              className="fill-zinc-200 absolute top-2 right-2 hidden group-hover:block hover:fill-red-500"
+              onClick={() => {
+                deleteLesson(v.id)
+              }}
+            />
+
             <span className="bg-zinc-600/50 h-full w-7 flex justify-center items-center font-bold">
               {i + 1}
             </span>

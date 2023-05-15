@@ -151,6 +151,24 @@
       "name": "bolo profissional",
       "course_id": "8",
       "id": 21
+    },
+    {
+      "videoId": "ZV4aKOqNBtU",
+      "name": "exemplo de animação top",
+      "course_id": "6",
+      "id": 22
+    },
+    {
+      "videoId": "ItVnKlwyWwA",
+      "name": "tutorial de como automatizar o lip-Syncing",
+      "course_id": "6",
+      "id": 23
+    },
+    {
+      "videoId": "1mTSNfMSFck",
+      "name": "Juntando animação com realidade",
+      "course_id": "6",
+      "id": 24
     }
   ]
 }
