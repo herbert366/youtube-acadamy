@@ -17,7 +17,7 @@ export default function CreateButton({ title, data, onSubmit }: Props) {
           e.stopPropagation()
           setShowForm(true)
         }}
-        className="p-2 bg-orange-500 hover:bg-orange-600 rounded-xl flex justify-center items-center gap-3"
+        className="p-2 bg-zinc-700 hover:bg-red-600 rounded-xl flex justify-center items-center gap-3"
       >
         <span>{title}</span>
         <IoAddCircleSharp size={30} />

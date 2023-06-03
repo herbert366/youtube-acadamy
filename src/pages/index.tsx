@@ -1,30 +1,21 @@
 import Link from 'next/link'
-import CreateButton from '../core/CreateButton'
 import DeleteButton from '../core/DeleteButton'
 import EditButton from '../core/EditButton'
+
 import { useCourses } from '../hooks/useCourses'
+import Poster from '../components/Poster'
 interface Props {}
 
 export default function Home({}: Props) {
   const { data: courses } = useCourses().get()
-  const createCourse = useCourses().create
   const deleteCourse = useCourses().delete
   const updateCourse = useCourses().update
 
   return (
     <div className="flex items-center min-h-[92.6vh] min-w-full flex-col">
+      <Poster src="https://images8.alphacoders.com/107/thumb-1920-1074175.png" />
       <main className="w-[90%] space-y-5 mt-5">
-        <CreateButton
-          data={{
-            name: { initialValue: '', type: 'text' },
-            poster: { initialValue: '', type: 'text' },
-          }}
-          title="Add course"
-          onSubmit={v => {
-            createCourse(v)
-          }}
-        />
-        <h1 className="text-3xl font-bold">Courses:</h1>
+        <h1 className="text-5xl font-bold">Courses:</h1>
         <div className="flex flex-wrap p-6 gap-6 bg-zinc-800  h-fit">
           {courses?.map((course, i) => (
             <div className="group relative">
