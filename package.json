@@ -8,7 +8,8 @@
     "build": "next build",
     "start": "next start -p 3032",
     "lint": "next lint",
-    "front-back": "concurrently \"next start -p 3032\" \"node server.js\""
+    "front-back": "concurrently \"next start -p 3032\" \"node server.js\"",
+    "dev-back": "concurrently \"next dev -p 3032\" \"node server.js\""
   },
   "dependencies": {
     "@types/node": "18.11.9",
@@ -17,13 +18,15 @@
     "axios": "^1.4.0",
     "dotenv": "^16.0.3",
     "formik": "^2.2.9",
+    "googleapis": "^118.0.0",
     "json-server": "^0.17.3",
     "next": "13.0.1",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-icons": "^4.8.0",
     "react-query": "^3.39.3",
-    "typescript": "4.8.4"
+    "typescript": "4.8.4",
+    "zustand": "^4.3.8"
   },
   "devDependencies": {
     "autoprefixer": "^10.4.13",
