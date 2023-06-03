@@ -1,8 +1,8 @@
-import { _Course } from '../utils/@types/_Data'
+import { Course } from '../utils/@types/_Course'
 import { myUseQuery } from './myUseQuery'
 
 export const useCourses = () => {
-  const crudFuncs = myUseQuery<_Course>({
+  const crudFuncs = myUseQuery<Course>({
     singularLabel: 'course',
     pluralLabel: 'courses',
   })

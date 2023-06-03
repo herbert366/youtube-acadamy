@@ -1,18 +1,21 @@
 import { useRouter } from 'next/router'
 import { useState } from 'react'
+
+import { useLessons } from '../../hooks/useLessons'
+
 import Video from '../../components/Video'
+
 import CreateButton from '../../core/CreateButton'
 import DeleteButton from '../../core/DeleteButton'
 import EditButton from '../../core/EditButton'
-import { useLessons } from '../../hooks/useLessons'
 
 export default function Course() {
   const router = useRouter()
   const { data: lessons } = useLessons().get({
     params: { course_id: Number(router.query.id as string) },
   })
-  const deleteLesson = useLessons().delete
 
+  const deleteLesson = useLessons().delete
   const createLesson = useLessons().create
   const updateLesson = useLessons().update
 
@@ -29,23 +32,24 @@ export default function Course() {
       </section>
       <section className="flex flex-[0.3] p-6 flex-col gap-5 bg-zinc-800 rounded-xl">
         <CreateButton
+          title="--Adicionar Aula--"
           data={{
-            videoId: { type: 'text' },
-            name: { type: 'text' },
+            videoId: { type: 'string' },
             course_id: {
-              initialValue: router.query.id as string,
+              initialValue: Number(router.query.id),
               type: 'number',
-              hide: true,
             },
           }}
-          title="Adicionar Aula"
-          onSubmit={(v: any) => {
-            createLesson({
-              ...v,
-              videoId: v?.videoId
-                .replace(/.*\?v=/i, '')
-                .replace(/.*youtu\.be\//i, ''),
-            })
+          onSubmit={async formData => {
+            const response = await fetch(
+              `/api/video-data?videoId=${formData.videoId}`
+            )
+            const responseData = await response.json()
+
+            createLesson({ ...formData, ...responseData })
+
+            // const dataTimeStamp = new Date(formData.publishedAt).getTime()
+            // createVideo({ ...formData, publishedAt: dataTimeStamp })
           }}
         />
 
