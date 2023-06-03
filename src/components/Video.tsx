@@ -17,7 +17,7 @@ export default function Video({ id, className }: Props) {
       <iframe
         className={`absolute top-0 left-0 w-full h-full z-30 ${
           !loaded ? 'hidden' : ''
-        }`}
+        } shadow-xl`}
         onLoad={() => {
           setLoaded(true)
         }}
@@ -27,7 +27,7 @@ export default function Video({ id, className }: Props) {
         frameBorder={0}
       ></iframe>
       {JSON.stringify(loaded)}
-      <div className="absolute top-0 left-0 right-0 bottom-0 m-auto bg-black flex justify-center items-center">
+      <div className="absolute top-0 left-0 right-0 bottom-0 m-auto bg-black flex justify-center items-center inset-0 bg-gradient-to-r from-transparent to-white/30 animate-pulse">
         <p>Carregando...</p>
       </div>
     </section>
