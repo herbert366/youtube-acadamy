@@ -23,11 +23,8 @@ export default function PastLinkLesson() {
       if (!clipboardContent) return
 
       const replacedContent = clipboardContent
-        // .replace(/.*watch\?v\=/gi, '')
+        .replace(/.*watch\?v=([a-zA-Z0-9_-]+).*/, '$1')
         .replace(/.*youtu\.be\//gi, '')
-        .replace(/.*youtube\.com\//gi, '')
-        .replace(/&.*\=.*/gi, '')
-        .replace(/watch\?v=([a-zA-Z0-9_-]+)/gi, '')
 
       if (replacedContent.length !== 11) {
         return setClipboardData(null)
