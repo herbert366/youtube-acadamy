@@ -23,8 +23,9 @@ export default function PastLinkLesson() {
       if (!clipboardContent) return
 
       const replacedContent = clipboardContent
+        //videos em playlist ou individual
         .replace(/.*watch\?v=([a-zA-Z0-9_-]+).*/, '$1')
-        .replace(/.*youtu\.be\//gi, '')
+        .replace(/.*youtu\.be\/([a-zA-Z0-9_-]+).*/gi, '$1')
 
       if (replacedContent.length !== 11) {
         return setClipboardData(null)
