@@ -8,6 +8,7 @@ import Video from '../../components/Video'
 import CreateButton from '../../core/CreateButton'
 import DeleteButton from '../../core/DeleteButton'
 import EditButton from '../../core/EditButton'
+import PastLinkVideo from '../../components/pastLinkVideo'
 
 export default function Course() {
   const router = useRouter()
@@ -20,6 +21,8 @@ export default function Course() {
   const updateLesson = useLessons().update
 
   const [indexSelected, setIndexSelected] = useState(0)
+
+  const { loading } = PastLinkVideo()
 
   if (!lessons) return null
 
@@ -100,6 +103,11 @@ export default function Course() {
             </div>
           </div>
         ))}
+        <div>
+          {loading && (
+            <div className="self-center px-20 text-3xl">Loading...</div>
+          )}
+        </div>
       </section>
     </div>
   )
