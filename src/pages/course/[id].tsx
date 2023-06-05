@@ -61,8 +61,8 @@ export default function Course() {
             key={i}
             onClick={() => setIndexSelected(i)}
             className={`rounded-xl ${
-              vidData.id === v.id ? 'bg-blue-900' : 'bg-zinc-700'
-            }  overflow-hidden  hover:bg-blue-800 hover:cursor-pointer transition-all hover:scale-105 flex gap-2 items-center group`}
+              vidData.id === v.id ? 'bg-slate-900' : 'bg-zinc-700'
+            }  overflow-hidden  hover:bg-slate-800 hover:cursor-pointer transition-all hover:scale-105 flex gap-2 items-center group`}
           >
             <DeleteButton onDelete={() => deleteLesson(v.id)} />
             <EditButton

@@ -14,7 +14,7 @@ export default function EditButton({ title, data, onSubmit }: Props) {
     <>
       <FaEdit
         size={25}
-        className="fill-zinc-200 absolute top-2 right-10 hidden group-hover:block hover:fill-purple-500 hover:cursor-pointer"
+        className="fill-zinc-200 absolute top-2 right-10 hidden group-hover:block hover:fill-slate-400 hover:cursor-pointer"
         onClick={e => {
           e.stopPropagation()
           setShowForm(true)

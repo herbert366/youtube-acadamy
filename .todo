@@ -1,0 +1,15 @@
+✔ curso point nos botões @done(23-06-04 21:18)
+✔ colar sem precisar clicar em nada dentro do curso @done(23-06-04 21:19)
+✔ pré layout pagina incial @done(23-06-04 21:19)
+✔ botão de criar curso perto da logo (head) @done(23-06-04 21:20)
+✔ apenas precisar botar o id do video do youtube pra adicionar a aula @done(23-06-04 21:20)
+✔ load mais elegante quando troca de aula @done(23-06-04 21:22)
+✔ alterar cor dos hover e tirar bug de não poder add curso no home @done(23-06-04 22:39)
+☐ melhorar o layot da tela inicial
+☐ adicionar "ordem" e "Progresso" no db
+☐ pegar o pogresso do atual do video do youtube
+☐ ir direto da home pra ultima aula clicada do usuario
+☐ criar "users" no db
+☐ criar função pra compartilhar o curso
+☐ criar modulos no curso
+☐ colar link playlist compartilhada na home e criar curso com as aulas

@@ -19,7 +19,7 @@ export default function Poster({ src }: { src: string }) {
           </span>
         </p>
 
-        <button className=" text-base w-fit  px-8 py-2 md:px-10 md:py-4 rounded-lg bg-zinc-700 md:text-2xl  xl:text-3xl shadow-xl shadow-black/40 hover:bg-red-600 hover:scale-105 hover:rounded-lg flex gap-4 justify-center items-center">
+        <button className="text-base w-fit  px-8 py-2 md:px-10 md:py-4 rounded-lg bg-zinc-700 md:text-2xl  xl:text-3xl shadow-xl shadow-black/40 hover:bg-red-600 hover:scale-105 hover:rounded-lg flex gap-4 justify-center items-center">
           <AiFillPlayCircle /> <span>Continuar</span>
         </button>
       </article>
