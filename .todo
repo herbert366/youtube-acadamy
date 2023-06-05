@@ -6,28 +6,41 @@
 ✔ load mais elegante quando troca de aula @done(23-06-04 21:22)
 ✔ alterar cor dos hover e tirar bug de não poder add curso no home @done(23-06-04 22:39)
 ✔ melhorar layot video @done(23-06-04 23:22)
+
+-- CURSO / AULA --
+☐ Criar Layout "default" para separar cursos em módulos
+  ☐ ajeitar o problema de editar aula
+    -A edição da aula tem que conter a ordem e modulo
+  ☐ criar modulos no curso
+  ☐ Inserir opção 'more' em cursos com mais de 5 aulas para carregamento progressivo
+  ☐ colocar "notes" no db, e pensar no layot com o modo notes
+  ☐ ocultar totalmente os control do youtube criar player poprio
+          -Anotação
+          -CC
+          -Speed até 3x
+          -Resolução *deixar a maior resuloção p/ padrão*
+  ☐ deixar todos os titulos capptlazer com wrap
+  ☐ animação de loading quando cola
+  ☐ tirar o "false" que fica aparecendo no video
+  ☐ criar "função" de "like"? (pra você dar like na sua conta no video original)
+  ☐ regex no botão de "adicionar aula, pra quem não quer usar cntrl c+v
+  ☐ opção de mudar a thumb da aula pra outra img aleatoria 
+  ☐ barra de progresso funcional
+    ☐ adicionar "ordem" e "Progresso" no db
+    ☐ pegar o pogresso do atual do video do youtube
+  
+
+-- HOME --
 ☐ melhorar o layot da tela inicial
-☐ ajeitar o problema de editar aula
-☐ adicionar "ordem" e "Progresso" no db
-☐ pegar o pogresso do atual do video do youtube
-☐ ir direto da home pra ultima aula clicada do usuario
-☐ criar "users" no db
-☐ criar modulos no curso
-☐ colar link playlist compartilhada na home e criar curso com as aulas
-☐ colocar user na head
-☐ colocar opção de "more" dentro do curso quando passar de 5 aulas pra não carregar todas de uma vez
-☐ pegar info de qual foi a ultima aula/video que o usario clicou
-☐ regex no botão de "adicionar aula, pra quem não quer usar cntrl c+v
-☐ deixar todos os titulos capptlazer com wrap
-☐ tirar o "false" que fica aparecendo no video
-☐ barra de progresso funcional
-☐ colocar "notes" no db, e pensar no layot com o modo notes
-☐ ocultar totalmente os control do youtube criar player poprio
-funções: - anotação
--cc
--speed até 3x
--resolução *deixar a maior resuloção p/ padrão*
-☐ criar função pra compartilhar o curso 
-☐ criar função de "like"? 
-☐ criar função de avaliar curso 
-☐ opção de mudar a thumb da aula pra outra img aleatoria 
+  ☐ colar link playlist compartilhada na home e criar curso com as aulas
+  ☐ colocar "ultima aula assitida como uns 30-40% da pagina
+    ☐ pegar info de qual foi a ultima aula/video que o usario clicou
+    ☐ ir direto da home pra ultima aula clicada do usuario
+  ☐ Transformar vídeos do YouTube C/ capt em módulos de curso com aulas separadas
+  ☐ colocar user na head
+  ☐ criar "users" no db
+  ☐ colocar os cursos maiores e só aparecer 9
+  ☐ pensar num layout quando tiver mais que 9
+  ☐ criar animações de loading home
+  ☐ criar "função" pra compartilhar o curso
+  ☐ criar "função" de avaliar curso
