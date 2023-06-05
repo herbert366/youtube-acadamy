@@ -7,6 +7,7 @@
 ✔ alterar cor dos hover e tirar bug de não poder add curso no home @done(23-06-04 22:39)
 ✔ melhorar layot video @done(23-06-04 23:22)
 ☐ melhorar o layot da tela inicial
+☐ ajeitar o problema de editar aula
 ☐ adicionar "ordem" e "Progresso" no db
 ☐ pegar o pogresso do atual do video do youtube
 ☐ ir direto da home pra ultima aula clicada do usuario
