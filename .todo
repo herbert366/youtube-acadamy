@@ -11,6 +11,22 @@
 ☐ pegar o pogresso do atual do video do youtube
 ☐ ir direto da home pra ultima aula clicada do usuario
 ☐ criar "users" no db
-☐ criar função pra compartilhar o curso
 ☐ criar modulos no curso
 ☐ colar link playlist compartilhada na home e criar curso com as aulas
+☐ colocar user na head
+☐ colocar opção de "more" dentro do curso quando passar de 5 aulas pra não carregar todas de uma vez
+☐ pegar info de qual foi a ultima aula/video que o usario clicou
+☐ regex no botão de "adicionar aula, pra quem não quer usar cntrl c+v
+☐ deixar todos os titulos capptlazer com wrap
+☐ tirar o "false" que fica aparecendo no video
+☐ barra de progresso funcional
+☐ colocar "notes" no db, e pensar no layot com o modo notes
+☐ ocultar totalmente os control do youtube criar player poprio
+funções: - anotação
+-cc
+-speed até 3x
+-resolução *deixar a maior resuloção p/ padrão*
+☐ criar função pra compartilhar o curso 
+☐ criar função de "like"? 
+☐ criar função de avaliar curso 
+☐ opção de mudar a thumb da aula pra outra img aleatoria 
