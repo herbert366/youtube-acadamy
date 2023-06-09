@@ -9,7 +9,7 @@
 
 -- CURSO / AULA --
 ☐ Criar Layout "default" para separar cursos em módulos
-  ☐ ajeitar o problema de editar aula
+  ☐ ajeitar o problema de editar aula (usar o zustand!!)
     -A edição da aula tem que conter a ordem e modulo
   ☐ criar modulos no curso
   ☐ Inserir opção 'more' em cursos com mais de 5 aulas para carregamento progressivo
