@@ -1,11 +1,13 @@
 import { useRouter } from 'next/router'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import PastLinkVideo from '../../components/pastLinkVideo'
 import Video from '../../components/Video'
 import CreateButton from '../../core/CreateButton'
 import DeleteButton from '../../core/DeleteButton'
 import EditButton from '../../core/EditButton'
 import { useLessons } from '../../hooks/useLessons'
+import { useVideoStore } from '../../store/VideoStore'
+import { getDurationStr } from '../../utils/converts'
 import { convertLongVideoToCourseData } from '../../utils/descriptionStamp'
 
 export default function Course() {
@@ -17,10 +19,17 @@ export default function Course() {
 
   const createLesson = useLessons().create
   const updateLesson = useLessons().update
+  const setCurrentLesson = useVideoStore(state => state.setCurrentLesson)
 
   const [indexSelected, setIndexSelected] = useState(0)
 
   const { loading } = PastLinkVideo()
+
+  useEffect(() => {
+    if (lessons) {
+      setCurrentLesson(lessons[indexSelected])
+    }
+  }, [indexSelected])
 
   if (!lessons) return null
 
@@ -111,16 +120,19 @@ export default function Course() {
               </div>
               <div className="flex flex-col gap-4 w-full">
                 <div className=" ">{v.name}</div>
-                <div className="h-4 w-[95%] bg-zinc-500 rounded-lg overflow-hidden">
-                  <div
-                    className=" h-full bg-red-400"
-                    style={{
-                      width:
-                        typeof v.progress === 'number'
-                          ? v.progress * 100 + '%'
-                          : '50%',
-                    }}
-                  ></div>
+                <div className="flex gap-4">
+                  <div>{getDurationStr(v.startTime, v.endTime)}</div>
+                  <div className="h-4 w-[95%] bg-zinc-500 rounded-lg overflow-hidden">
+                    <div
+                      className=" h-full bg-red-400"
+                      style={{
+                        width:
+                          typeof v.progress === 'number'
+                            ? v.progress * 100 + '%'
+                            : '50%',
+                      }}
+                    ></div>
+                  </div>
                 </div>
               </div>
             </div>

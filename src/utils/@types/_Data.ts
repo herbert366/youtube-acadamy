@@ -1,10 +1,13 @@
-export type _Lesson = {
-  id: number
-  course_id: number
-  videoId: string
-  name: string
-  progress?: number
-}
+import { Lesson } from './_Lesson'
+
+export type _Lesson = Lesson
+// {
+//   id: number
+//   course_id: number
+//   videoId: string
+//   name: string
+//   progress?: number
+// }
 
 export type _Module = {}
 

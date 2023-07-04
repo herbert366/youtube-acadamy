@@ -1,86 +1,178 @@
 import { useEffect, useState } from 'react'
-import YouTube from 'react-youtube'
-import { YouTubePlayer } from 'youtube-player/dist/types'
+import { useVideoStore } from '../store/VideoStore'
+import { _Lesson } from '../utils/@types/_Data'
 import { Lesson } from '../utils/@types/_Lesson'
-
-const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms))
+import { secToTimeStr } from '../utils/converts'
+import { Youtube } from './Youtube'
 
 interface Props {
   lessonData: Lesson
   className?: string
 }
 
+interface InputControlProps {
+  onChange: (percent: number) => void
+  value: number
+}
+
+function InputControl({ onChange }: InputControlProps) {
+  const value = useVideoStore(state => state.inputControlValue)
+  const setInputControlValue = useVideoStore(
+    state => state.setInputControlValue
+  )
+
+  return (
+    <input
+      type="range"
+      name=""
+      id=""
+      className="w-full"
+      min={0}
+      max={100}
+      step={0.2}
+      value={value}
+      onChange={e => {
+        console.log(Number(e.target.value))
+        onChange(Number(e.target.value))
+        setInputControlValue(Number(e.target.value))
+        // setValue(Number(e.target.value))
+      }}
+    />
+  )
+}
+
+function TimeVideoView({
+  inputValue,
+  lessonData,
+}: {
+  inputValue: number
+  lessonData: _Lesson
+}) {
+  if (
+    lessonData?.endTime === undefined ||
+    lessonData?.startTime === undefined
+  ) {
+    return null
+  }
+
+  const duration = lessonData?.endTime - lessonData?.startTime
+  const showHour = duration >= 3600
+
+  const secStr = (sec: number) => secToTimeStr(sec, showHour)
+  return (
+    <div>
+      {secStr((inputValue / 100) * duration)} / {secStr(duration)}
+    </div>
+  )
+}
+
+function getTimeByPercent(props: {
+  percent: number
+  startTime: number
+  endTime: number
+}) {
+  const { percent, startTime, endTime } = props
+
+  return (endTime - startTime) * percent + startTime
+}
+
+function getPercentByTime(props: {
+  startTime: number
+  endTime: number
+  currentTime: number
+}) {
+  const { currentTime, startTime, endTime } = props
+
+  console.log({
+    ...props,
+    result: (currentTime - startTime) / (endTime - startTime),
+  })
+  return (currentTime - startTime) / (endTime - startTime)
+}
+
 export default function Video({ lessonData, className }: Props) {
   const [loaded, setLoaded] = useState(false)
+  const videoTarget = useVideoStore(state => state.videoTarget)
+  const isPaused = useVideoStore(state => state.isPaused)
+  const setIsPaused = useVideoStore(state => state.setIsPaused)
+  const setInputControlValue = useVideoStore(
+    state => state.setInputControlValue
+  )
+  const inputControlValue = useVideoStore(state => state.inputControlValue)
+
+  useEffect(() => {
+    if (loaded === false) {
+      setInputControlValue(0)
+    }
+  }, [loaded])
 
   useEffect(() => {
     setLoaded(false)
   }, [lessonData?.id])
 
-  const [isPaused, setIsPaused] = useState(true)
-  const [videoTarget, setVideoTarget] = useState<YouTubePlayer | null>(null)
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === ' ') {
+        event.preventDefault()
+        if (isPaused) setIsPaused(false)
+        else setIsPaused(true)
+      }
+    }
 
-  function _onReady(event: { target: YouTubePlayer }) {
-    setVideoTarget(event.target)
+    window.addEventListener('keydown', handleKeyDown)
 
-    // videoTarget?.seekTo(10, true)
-    // event.target.seekTo(10)
-  }
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown)
+    }
+  }, [isPaused])
 
   useEffect(() => {
     if (videoTarget) {
       setLoaded(true)
     }
-    if (videoTarget && lessonData.startTime) {
-      videoTarget.seekTo(lessonData.startTime, true)
+    try {
+      if (videoTarget?.seekTo && typeof lessonData.startTime === 'number') {
+        videoTarget.playVideo()
+        videoTarget.seekTo(lessonData.startTime, true)
+      }
+    } catch (error) {
+      console.log('foda-se negão')
     }
-  }, [videoTarget, lessonData?.startTime])
+  }, [videoTarget, lessonData?.startTime, lessonData?.endTime])
 
-  // className="flex bg-black relative w-full h-fit pb-[50.25%]  rounded-md justify-center overflow-hidden"
   return (
     <section className="rounded-md overflow-hidden w-full relative">
-      <YouTube
-        className="w-full pb-[56.25%] h-0 bg-black relative shadow-xl"
-        iframeClassName="w-full absolute left-0 top-0 h-full"
-        // className={` ${
-        //   !loaded ? 'hidden' : ''
-        // } `}
-        style={{ opacity: loaded ? 1 : 0 }}
+      <Youtube
         videoId={lessonData?.videoId}
-        opts={{
-          playerVars: {
-            modestbranding: 1,
-            fs: 0,
-            // controls: 0,
-          },
-        }}
-        onReady={_onReady}
-        onPause={() => setIsPaused(true)}
-        onPlay={async () => {
-          await delay(360)
-          setIsPaused(false)
-        }}
-        onEnd={({ target }) => {
-          target.seekTo(0, true)
-          setIsPaused(true)
+        loaded={loaded}
+        onCurrentTimeChange={async currentTime => {
+          let videoEndTime = lessonData?.endTime || 0
+          let duration = 0
+
+          if (
+            !lessonData.endTime &&
+            videoTarget &&
+            typeof lessonData.startTime === 'number'
+          ) {
+            duration = await videoTarget.getDuration()
+            videoEndTime = duration + lessonData.startTime
+          }
+          const _newInputValue = getPercentByTime({
+            currentTime,
+            startTime: lessonData.startTime || 0,
+            endTime: videoEndTime,
+          })
+
+          const newInputValue = _newInputValue * 100
+
+          setInputControlValue(newInputValue)
+
+          if (currentTime >= videoEndTime) {
+            videoTarget?.pauseVideo()
+            videoTarget?.seekTo(videoEndTime, true)
+          }
         }}
       />
-      {/* <iframe
-        className={`absolute top-0 left-0 w-full h-full z-30 ${
-          !loaded ? 'hidden' : ''
-        } shadow-xl`}
-        onLoad={() => {
-          setLoaded(true)
-        }}
-        src={
-          'https://www.youtube.com/embed/' +
-          lessonData.videoId +
-          '?rel=0&showinfo=1&modestbranding=1&autoplay=1'
-        }
-        allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture;"
-        allowFullScreen
-        frameBorder={0}
-      ></iframe> */}
 
       {!loaded && (
         <div className="absolute top-0 left-0 right-0 bottom-0 m-auto bg-black flex justify-center items-center inset-0 bg-gradient-to-r from-transparent to-white/30 animate-pulse">
@@ -94,6 +186,37 @@ export default function Video({ lessonData, className }: Props) {
           />
         </div>
       )}
+      <InputControl
+        value={inputControlValue}
+        onChange={async value => {
+          if (videoTarget) {
+            let videoEndTime = 0
+
+            if (
+              !lessonData.endTime &&
+              typeof lessonData.startTime === 'number'
+            ) {
+              videoEndTime = await videoTarget.getDuration()
+              videoEndTime += lessonData.startTime
+            }
+
+            const secTime = getTimeByPercent({
+              percent: value / 100,
+              startTime: lessonData.startTime || 0,
+              endTime: lessonData.endTime || videoEndTime,
+            })
+            videoTarget.seekTo(secTime, true)
+          }
+          setInputControlValue(value)
+        }}
+      />
+      {lessonData?.endTime !== undefined &&
+        lessonData?.startTime !== undefined && (
+          <TimeVideoView
+            lessonData={lessonData}
+            inputValue={inputControlValue}
+          />
+        )}
       {/* {JSON.stringify(lessonData)} */}
     </section>
   )
