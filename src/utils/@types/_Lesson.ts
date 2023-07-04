@@ -9,6 +9,8 @@ export interface Lesson {
   publishedAt: number
   createdAt?: number
   updatedAt?: number
+  startTime?: number
+  endTime?: number
 }
 export interface LessonCreate extends Omit<Lesson, 'id'> {
   id?: number

@@ -1,6 +1,6 @@
-import { useLessons } from '../hooks/useLessons'
-import { useCourses } from '../hooks/useCourses'
 import { AiFillPlayCircle } from 'react-icons/ai'
+import { useCourses } from '../hooks/useCourses'
+import { useLessons } from '../hooks/useLessons'
 
 export default function Poster({ src }: { src: string }) {
   const { data: courses } = useCourses().get()
@@ -8,6 +8,8 @@ export default function Poster({ src }: { src: string }) {
   const { data: lessons } = useLessons().get({
     params: { course_id: Number(courses?.[0]?.id) },
   })
+
+  if (!lessons?.[2]) return null
 
   return (
     <main className="progress py-6 h-fit w-fit mx-auto relative group">
