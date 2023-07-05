@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react'
 import { useVideoStore } from '../store/VideoStore'
-import { _Lesson } from '../utils/@types/_Data'
 import { Lesson } from '../utils/@types/_Lesson'
-import { secToTimeStr } from '../utils/converts'
+import { getPercentByTime, getTimeByPercent } from '../utils/converts'
+import { InputControl } from './InputVideoControl'
+import { TimeVideoView } from './VideoTimeView'
 import { Youtube } from './Youtube'
 
 interface Props {
@@ -10,87 +11,7 @@ interface Props {
   className?: string
 }
 
-interface InputControlProps {
-  onChange: (percent: number) => void
-  value: number
-}
-
-function InputControl({ onChange }: InputControlProps) {
-  const value = useVideoStore(state => state.inputControlValue)
-  const setInputControlValue = useVideoStore(
-    state => state.setInputControlValue
-  )
-
-  return (
-    <input
-      type="range"
-      name=""
-      id=""
-      className="w-full"
-      min={0}
-      max={100}
-      step={0.2}
-      value={value}
-      onChange={e => {
-        console.log(Number(e.target.value))
-        onChange(Number(e.target.value))
-        setInputControlValue(Number(e.target.value))
-        // setValue(Number(e.target.value))
-      }}
-    />
-  )
-}
-
-function TimeVideoView({
-  inputValue,
-  lessonData,
-}: {
-  inputValue: number
-  lessonData: _Lesson
-}) {
-  if (
-    lessonData?.endTime === undefined ||
-    lessonData?.startTime === undefined
-  ) {
-    return null
-  }
-
-  const duration = lessonData?.endTime - lessonData?.startTime
-  const showHour = duration >= 3600
-
-  const secStr = (sec: number) => secToTimeStr(sec, showHour)
-  return (
-    <div>
-      {secStr((inputValue / 100) * duration)} / {secStr(duration)}
-    </div>
-  )
-}
-
-function getTimeByPercent(props: {
-  percent: number
-  startTime: number
-  endTime: number
-}) {
-  const { percent, startTime, endTime } = props
-
-  return (endTime - startTime) * percent + startTime
-}
-
-function getPercentByTime(props: {
-  startTime: number
-  endTime: number
-  currentTime: number
-}) {
-  const { currentTime, startTime, endTime } = props
-
-  console.log({
-    ...props,
-    result: (currentTime - startTime) / (endTime - startTime),
-  })
-  return (currentTime - startTime) / (endTime - startTime)
-}
-
-export default function Video({ lessonData, className }: Props) {
+export default function Video({ lessonData }: Props) {
   const [loaded, setLoaded] = useState(false)
   const videoTarget = useVideoStore(state => state.videoTarget)
   const isPaused = useVideoStore(state => state.isPaused)

@@ -37,10 +37,10 @@ export default function Course() {
 
   return (
     <div className="w-full min-h-[92.6vh] flex justify-center gap-6 p-6 flex-wrap bg-zinc-900">
-      <section className="flex flex-[0.6] h-fit flex-wrap shadow-sm rounded-md justify-center overflow-hidden p-4">
+      <section className="flex flex-1 h-fit flex-wrap shadow-sm rounded-md justify-center overflow-hidden p-4">
         <Video lessonData={vidData} />
       </section>
-      <section className="flex flex-[0.3] p-6 flex-col gap-5 bg-zinc-800 rounded-xl">
+      <section className="flex flex-[0.3] p-6 flex-col gap-5 bg-zinc-800 rounded-xl overflow-auto">
         <div className="flex gap-4 w-full justify-between">
           <CreateButton
             data={{
@@ -94,7 +94,7 @@ export default function Course() {
             onClick={() => setIndexSelected(i)}
             className={`rounded-xl ${
               vidData.id === v.id ? 'bg-slate-900' : 'bg-zinc-700'
-            }  overflow-hidden  hover:bg-slate-800 hover:cursor-pointer transition-all hover:scale-105 flex gap-2 items-center group`}
+            }  overflow-hidden  hover:bg-slate-800 hover:cursor-pointer transition-all hover:scale-105 flex gap-2 items-center group `}
           >
             <DeleteButton onDelete={() => deleteLesson(v.id)} />
             <EditButton

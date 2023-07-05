@@ -8,3 +8,27 @@ export function getDurationStr(start?: number, end?: number) {
   }
   return ''
 }
+
+export function getTimeByPercent(props: {
+  percent: number
+  startTime: number
+  endTime: number
+}) {
+  const { percent, startTime, endTime } = props
+
+  return (endTime - startTime) * percent + startTime
+}
+
+export function getPercentByTime(props: {
+  startTime: number
+  endTime: number
+  currentTime: number
+}) {
+  const { currentTime, startTime, endTime } = props
+
+  console.log({
+    ...props,
+    result: (currentTime - startTime) / (endTime - startTime),
+  })
+  return (currentTime - startTime) / (endTime - startTime)
+}

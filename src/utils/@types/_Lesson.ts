@@ -11,6 +11,7 @@ export interface Lesson {
   updatedAt?: number
   startTime?: number
   endTime?: number
+  percentWatched?: number
 }
 export interface LessonCreate extends Omit<Lesson, 'id'> {
   id?: number

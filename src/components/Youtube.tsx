@@ -57,8 +57,8 @@ export function Youtube({
       opts={{
         playerVars: {
           modestbranding: 1,
-          fs: 0,
-          controls: 0,
+          // fs: 0,
+          // controls: 0,
           rel: 0,
           disablekb: 1,
         },
