@@ -3,7 +3,7 @@ export interface Lesson {
   course_id?: number
   videoId: string
   name: string
-  progress?: number
+  progressPercent?: number
   url?: string
   thumbnailUrl?: string
   publishedAt: number
@@ -11,7 +11,6 @@ export interface Lesson {
   updatedAt?: number
   startTime?: number
   endTime?: number
-  percentWatched?: number
 }
 export interface LessonCreate extends Omit<Lesson, 'id'> {
   id?: number

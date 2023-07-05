@@ -6,7 +6,7 @@ export type _Lesson = Lesson
 //   course_id: number
 //   videoId: string
 //   name: string
-//   progress?: number
+//   progressPercent?: number
 // }
 
 export type _Module = {}

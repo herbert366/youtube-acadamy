@@ -38,11 +38,13 @@ export function Youtube({
   }, [videoTarget, onCurrentTimeChange])
 
   useEffect(() => {
-    if (isPaused) {
-      videoTarget?.pauseVideo()
-    } else {
-      videoTarget?.playVideo()
-    }
+    // try {
+    //   if (isPaused) {
+    //     videoTarget?.playVideo()
+    //   } else {
+    //     videoTarget?.pauseVideo()
+    //   }
+    // } catch (error) {}
   }, [isPaused])
 
   return (

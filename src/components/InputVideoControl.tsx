@@ -22,7 +22,7 @@ export function InputControl({ onChange }: InputControlProps) {
       step={0.2}
       value={value}
       onChange={e => {
-        console.log(Number(e.target.value))
+        // console.log(Number(e.target.value))
         onChange(Number(e.target.value))
         setInputControlValue(Number(e.target.value))
         // setValue(Number(e.target.value))

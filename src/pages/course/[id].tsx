@@ -1,10 +1,11 @@
 import { useRouter } from 'next/router'
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import PastLinkVideo from '../../components/pastLinkVideo'
 import Video from '../../components/Video'
 import CreateButton from '../../core/CreateButton'
 import DeleteButton from '../../core/DeleteButton'
 import EditButton from '../../core/EditButton'
+import { useCourses } from '../../hooks/useCourses'
 import { useLessons } from '../../hooks/useLessons'
 import { useVideoStore } from '../../store/VideoStore'
 import { getDurationStr } from '../../utils/converts'
@@ -19,21 +20,35 @@ export default function Course() {
 
   const createLesson = useLessons().create
   const updateLesson = useLessons().update
-  const setCurrentLesson = useVideoStore(state => state.setCurrentLesson)
+  const updateCourse = useCourses().update
+  const { data: course } = useCourses().getUniq(
+    Number(router.query.id as string)
+  )
 
-  const [indexSelected, setIndexSelected] = useState(0)
+  const setCurrentLesson = useVideoStore(state => state.setCurrentLesson)
+  const currentLesson = useVideoStore(state => state.currentLesson)
 
   const { loading } = PastLinkVideo()
 
   useEffect(() => {
-    if (lessons) {
-      setCurrentLesson(lessons[indexSelected])
+    if (currentLesson) {
+      updateCourse(Number(router.query.id), {
+        lastLessonWatchedId: currentLesson.id,
+      })
     }
-  }, [indexSelected])
+  }, [currentLesson])
 
-  if (!lessons) return null
+  useEffect(() => {
+    if (lessons && !currentLesson && course) {
+      setCurrentLesson(
+        lessons.find(l => l.id === course.lastLessonWatchedId) || lessons[0]
+      )
+    }
+  }, [lessons, currentLesson, course])
 
-  const vidData = lessons[indexSelected]
+  if (!lessons || !currentLesson) return null
+
+  const vidData = currentLesson
 
   return (
     <div className="w-full min-h-[92.6vh] flex justify-center gap-6 p-6 flex-wrap bg-zinc-900">
@@ -91,7 +106,7 @@ export default function Course() {
         {lessons.map((v, i) => (
           <div
             key={i}
-            onClick={() => setIndexSelected(i)}
+            onClick={() => setCurrentLesson(lessons[i])}
             className={`rounded-xl ${
               vidData.id === v.id ? 'bg-slate-900' : 'bg-zinc-700'
             }  overflow-hidden  hover:bg-slate-800 hover:cursor-pointer transition-all hover:scale-105 flex gap-2 items-center group `}
@@ -124,12 +139,12 @@ export default function Course() {
                   <div>{getDurationStr(v.startTime, v.endTime)}</div>
                   <div className="h-4 w-[95%] bg-zinc-500 rounded-lg overflow-hidden">
                     <div
-                      className=" h-full bg-red-400"
+                      className=" h-full bg-blue-400"
                       style={{
                         width:
-                          typeof v.progress === 'number'
-                            ? v.progress * 100 + '%'
-                            : '50%',
+                          typeof v.progressPercent === 'number'
+                            ? v.progressPercent * 100 + '%'
+                            : '0%',
                       }}
                     ></div>
                   </div>
@@ -144,6 +159,7 @@ export default function Course() {
           )}
         </div>
       </section>
+      {/* <div>{JSON.stringify(currentLesson)}</div> */}
     </div>
   )
 }

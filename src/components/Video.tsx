@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { useLessons } from '../hooks/useLessons'
 import { useVideoStore } from '../store/VideoStore'
 import { Lesson } from '../utils/@types/_Lesson'
 import { getPercentByTime, getTimeByPercent } from '../utils/converts'
@@ -19,11 +20,12 @@ export default function Video({ lessonData }: Props) {
   const setInputControlValue = useVideoStore(
     state => state.setInputControlValue
   )
+  const updateLesson = useLessons().update
   const inputControlValue = useVideoStore(state => state.inputControlValue)
 
   useEffect(() => {
     if (loaded === false) {
-      setInputControlValue(0)
+      setInputControlValue((lessonData?.progressPercent || 0) * 100)
     }
   }, [loaded])
 
@@ -53,12 +55,16 @@ export default function Video({ lessonData }: Props) {
     }
     try {
       if (videoTarget?.seekTo && typeof lessonData.startTime === 'number') {
+        const timeByPercent = getTimeByPercent({
+          percent: lessonData.progressPercent,
+          startTime: lessonData.startTime,
+          endTime: lessonData.endTime,
+        })
+
+        videoTarget.seekTo(timeByPercent || lessonData.startTime, true)
         videoTarget.playVideo()
-        videoTarget.seekTo(lessonData.startTime, true)
       }
-    } catch (error) {
-      console.log('foda-se negão')
-    }
+    } catch (error) {}
   }, [videoTarget, lessonData?.startTime, lessonData?.endTime])
 
   return (
@@ -84,13 +90,23 @@ export default function Video({ lessonData }: Props) {
             endTime: videoEndTime,
           })
 
-          const newInputValue = _newInputValue * 100
+          const rounded = Number(_newInputValue.toFixed(2))
 
-          setInputControlValue(newInputValue)
+          setInputControlValue(_newInputValue * 100)
 
           if (currentTime >= videoEndTime) {
             videoTarget?.pauseVideo()
             videoTarget?.seekTo(videoEndTime, true)
+          }
+          const no = !lessonData.progressPercent && rounded === 1
+          const changed = lessonData.progressPercent !== rounded
+
+          if (changed && !no) {
+            try {
+              updateLesson(lessonData.id, { progressPercent: rounded })
+            } catch (error) {
+              console.log('erro ao enviar pro db')
+            }
           }
         }}
       />
@@ -126,7 +142,7 @@ export default function Video({ lessonData }: Props) {
               startTime: lessonData.startTime || 0,
               endTime: lessonData.endTime || videoEndTime,
             })
-            videoTarget.seekTo(secTime, true)
+            if (secTime) videoTarget.seekTo(secTime, true)
           }
           setInputControlValue(value)
         }}
