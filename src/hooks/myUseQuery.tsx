@@ -77,15 +77,25 @@ export function myUseQuery<Type extends { id: unknown }>({
   }
 
   function useUpdate(id: Type['id'], updatedData: Partial<Type>) {
-    axiosApi.patch(`/${pluralLabel}/${id}`, updatedData).then(() => {
-      queryClient.invalidateQueries([pluralLabel])
-    })
+    axiosApi
+      .patch(`/${pluralLabel}/${id}`, updatedData)
+      .then(() => {
+        queryClient.invalidateQueries([pluralLabel])
+      })
+      .catch(() => {
+        console.error('Error patch')
+      })
   }
 
   function useCreate(dataCreate: Partial<Type>) {
-    axiosApi.post(`/${pluralLabel}`, dataCreate).then(() => {
-      queryClient.invalidateQueries([pluralLabel])
-    })
+    axiosApi
+      .post(`/${pluralLabel}`, dataCreate)
+      .then(() => {
+        queryClient.invalidateQueries([pluralLabel])
+      })
+      .catch(() => {
+        console.error('Error post')
+      })
   }
 
   return {
