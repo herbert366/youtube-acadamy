@@ -32,7 +32,11 @@ export function myUseQuery<Type extends { id: unknown }>({
   pluralLabel,
   singularLabel,
 }: Props) {
-  function useGet(op: { id?: Type['id']; params?: Partial<Type> } = {}) {
+  // type conditionalType<ID> = ID extends undefined ? Type[] : Type
+
+  function useGet<ExportType>(
+    op: { id?: Type['id']; params?: Partial<Type> } = {}
+  ) {
     const query = dictToQuery<Type>(op.params)
 
     let queryKey: QueryKey = []
@@ -49,10 +53,10 @@ export function myUseQuery<Type extends { id: unknown }>({
       queryKey = [pluralLabel]
     }
 
-    const getAll = useQuery<Type[]>(
+    const getAll = useQuery<ExportType>(
       queryKey,
       async () => {
-        const { data } = await axiosApi.get<Type[]>(path)
+        const { data } = await axiosApi.get<ExportType>(path)
         return data
       },
       {
@@ -62,7 +66,7 @@ export function myUseQuery<Type extends { id: unknown }>({
 
     return {
       ...getAll,
-      data: getAll.data as Type[],
+      data: getAll.data as ExportType,
     }
   }
 
@@ -85,7 +89,12 @@ export function myUseQuery<Type extends { id: unknown }>({
   }
 
   return {
-    get: useGet,
+    get: (op?: { id?: Type['id']; params?: Partial<Type> }) => {
+      return useGet<Type[]>(op)
+    },
+    getUniq: (id: Type['id'], op?: Partial<Type>) => {
+      return useGet<Type>({ id, ...op })
+    },
     delete: useDelete,
     update: useUpdate,
     create: useCreate,
