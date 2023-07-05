@@ -32,7 +32,6 @@ export function Youtube({
 
         onCurrentTimeChange(currentTime)
       }, 500)
-
       return () => clearInterval(interval)
     }
   }, [videoTarget, onCurrentTimeChange])

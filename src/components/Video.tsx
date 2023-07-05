@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react'
-import { useLessons } from '../hooks/useLessons'
 import { useVideoStore } from '../store/VideoStore'
 import { Lesson } from '../utils/@types/_Lesson'
 import { getPercentByTime, getTimeByPercent } from '../utils/converts'
@@ -20,7 +19,7 @@ export default function Video({ lessonData }: Props) {
   const setInputControlValue = useVideoStore(
     state => state.setInputControlValue
   )
-  const updateLesson = useLessons().update
+
   const inputControlValue = useVideoStore(state => state.inputControlValue)
 
   useEffect(() => {
@@ -89,25 +88,15 @@ export default function Video({ lessonData }: Props) {
             startTime: lessonData.startTime || 0,
             endTime: videoEndTime,
           })
-
-          const rounded = Number(_newInputValue.toFixed(2))
-
-          setInputControlValue(_newInputValue * 100)
+          const newInputValueRound = Number(_newInputValue.toFixed(2))
 
           if (currentTime >= videoEndTime) {
             videoTarget?.pauseVideo()
             videoTarget?.seekTo(videoEndTime, true)
           }
-          const no = !lessonData.progressPercent && rounded === 1
-          const changed = lessonData.progressPercent !== rounded
+          const no = !lessonData.progressPercent && newInputValueRound === 1
 
-          if (changed && !no) {
-            try {
-              updateLesson(lessonData.id, { progressPercent: rounded })
-            } catch (error) {
-              console.log('erro ao enviar pro db')
-            }
-          }
+          if (!no) setInputControlValue(_newInputValue * 100)
         }}
       />
 

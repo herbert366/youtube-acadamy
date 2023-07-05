@@ -6,6 +6,7 @@ import CreateButton from '../../core/CreateButton'
 import DeleteButton from '../../core/DeleteButton'
 import EditButton from '../../core/EditButton'
 import { useCourses } from '../../hooks/useCourses'
+import { useSaveProgressDataBase } from '../../hooks/useInterval'
 import { useLessons } from '../../hooks/useLessons'
 import { useVideoStore } from '../../store/VideoStore'
 import { getDurationStr } from '../../utils/converts'
@@ -17,6 +18,7 @@ export default function Course() {
     params: { course_id: Number(router.query.id as string) },
   })
   const deleteLesson = useLessons().delete
+  useSaveProgressDataBase()
 
   const createLesson = useLessons().create
   const updateLesson = useLessons().update
