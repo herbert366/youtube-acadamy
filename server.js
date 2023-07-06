@@ -10,10 +10,10 @@ if (process.env.JSON_DB_PATH) {
   server.use(middlewares)
   server.use(myMiddlewares)
   server.use(router)
-  server.listen(process.env.BACK_PORT || 4032, () => {
+  server.listen(process.env.BACK_PORT || 3032, () => {
     console.log(
       'JSON Server is running on port:',
-      process.env.BACK_PORT || 4032
+      process.env.BACK_PORT || 3032
     )
   })
 }

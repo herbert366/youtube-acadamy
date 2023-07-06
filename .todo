@@ -21,7 +21,8 @@
           -Resolução *deixar a maior resuloção p/ padrão*
   ☐ deixar todos os titulos capptlazer com wrap
   ☐ animação de loading quando cola
-  ☐ tirar o "false" que fica aparecendo no video
+  ✔ tirar o "false" que fica aparecendo no video @done(23-07-03 16:02)
+  ☐ criar btão / feacture de aulas massivas pegando a minutagem da descrição/cometarios do video ✔ @done(23-07-03 16:02)
   ☐ criar "função" de "like"? (pra você dar like na sua conta no video original)
   ☐ regex no botão de "adicionar aula, pra quem não quer usar cntrl c+v
   ☐ opção de mudar a thumb da aula pra outra img aleatoria 
@@ -30,7 +31,7 @@
     ☐ pegar o pogresso do atual do video do youtube
   
 
--- HOME --
+-- HOME --41
 ☐ melhorar o layot da tela inicial
   ☐ colar link playlist compartilhada na home e criar curso com as aulas
   ☐ colocar "ultima aula assitida como uns 30-40% da pagina
