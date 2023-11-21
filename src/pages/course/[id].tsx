@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import Video from '../../components/Video'
 import PastLinkVideo from '../../components/pastLinkVideo'
 import CreateButton from '../../core/CreateButton'
@@ -40,7 +40,14 @@ export default function Course() {
     }
   }, [currentLesson])
 
+  const [started, setStarted] = useState(false)
+
   useEffect(() => {
+    if (!started && lessons) {
+      setCurrentLesson(lessons[0])
+      setStarted(true)
+      return
+    }
     if (lessons && !currentLesson && course) {
       setCurrentLesson(
         lessons.find(l => l.id === course.lastLessonWatchedId) || lessons[0]
