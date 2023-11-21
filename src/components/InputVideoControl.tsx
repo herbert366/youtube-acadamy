@@ -16,7 +16,7 @@ export function InputControl({ onChange }: InputControlProps) {
       type="range"
       name=""
       id=""
-      className="w-full"
+      className="w-full cursor-pointer"
       min={0}
       max={100}
       step={0.2}

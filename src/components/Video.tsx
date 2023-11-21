@@ -52,6 +52,7 @@ export default function Video({ lessonData }: Props) {
     if (videoTarget) {
       setLoaded(true)
     }
+
     try {
       if (videoTarget?.seekTo && typeof lessonData.startTime === 'number') {
         const timeByPercent = getTimeByPercent({
@@ -82,9 +83,14 @@ export default function Video({ lessonData }: Props) {
         videoId={lessonData?.videoId}
         loaded={loaded}
         onCurrentTimeChange={async currentTime => {
-          let videoEndTime = lessonData?.endTime || 0
-          let duration = 0
+          let videoEndTime = lessonData?.endTime
 
+          if (!videoEndTime) {
+            const duration = (await videoTarget?.getDuration()) || 0
+            videoEndTime = duration
+          }
+
+          let duration = 0
           if (
             !lessonData.endTime &&
             videoTarget &&
@@ -98,14 +104,13 @@ export default function Video({ lessonData }: Props) {
             startTime: lessonData.startTime || 0,
             endTime: videoEndTime,
           })
+          console.log({ _newInputValue })
           const newInputValueRound = Number(_newInputValue.toFixed(2))
-
-          if (currentTime >= videoEndTime) {
-            videoTarget?.pauseVideo()
-            videoTarget?.seekTo(videoEndTime, true)
-          }
+          // if (currentTime >= videoEndTime) {
+          //   videoTarget?.pauseVideo()
+          //   videoTarget?.seekTo(videoEndTime, true)
+          // }
           const no = !lessonData.progressPercent && newInputValueRound === 1
-
           if (!no) setInputControlValue(_newInputValue * 100)
         }}
       />
@@ -122,30 +127,33 @@ export default function Video({ lessonData }: Props) {
           />
         </div>
       )}
-      <InputControl
-        value={inputControlValue}
-        onChange={async value => {
-          if (videoTarget) {
-            let videoEndTime = 0
+      {lessonData.endTime !== undefined && (
+        <InputControl
+          value={inputControlValue}
+          onChange={async value => {
+            if (videoTarget) {
+              let videoEndTime = 0
 
-            if (
-              !lessonData.endTime &&
-              typeof lessonData.startTime === 'number'
-            ) {
-              videoEndTime = await videoTarget.getDuration()
-              videoEndTime += lessonData.startTime
+              if (
+                !lessonData.endTime &&
+                typeof lessonData.startTime === 'number'
+              ) {
+                videoEndTime = await videoTarget.getDuration()
+                videoEndTime += lessonData.startTime
+              }
+
+              const secTime = getTimeByPercent({
+                percent: value / 100,
+                startTime: lessonData.startTime || 0,
+                endTime: lessonData.endTime || videoEndTime,
+              })
+              if (secTime) videoTarget.seekTo(secTime, true)
             }
+            setInputControlValue(value)
+          }}
+        />
+      )}
 
-            const secTime = getTimeByPercent({
-              percent: value / 100,
-              startTime: lessonData.startTime || 0,
-              endTime: lessonData.endTime || videoEndTime,
-            })
-            if (secTime) videoTarget.seekTo(secTime, true)
-          }
-          setInputControlValue(value)
-        }}
-      />
       {lessonData?.endTime !== undefined &&
         lessonData?.startTime !== undefined && (
           <TimeVideoView
