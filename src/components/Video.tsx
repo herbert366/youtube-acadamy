@@ -82,6 +82,7 @@ export default function Video({ lessonData }: Props) {
       <Youtube
         videoId={lessonData?.videoId}
         loaded={loaded}
+        showControls={lessonData?.endTime ? false : true}
         onCurrentTimeChange={async currentTime => {
           let videoEndTime = lessonData?.endTime
 

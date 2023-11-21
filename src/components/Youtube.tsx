@@ -9,10 +9,12 @@ export function Youtube({
   videoId,
   loaded,
   onCurrentTimeChange,
+  showControls,
 }: {
   videoId: string
   loaded: boolean
   onCurrentTimeChange: (currentTime: number) => void
+  showControls?: boolean
 }) {
   const videoTarget = useVideoStore(state => state.videoTarget)
   const setVideoTarget = useVideoStore(state => state.setVideoTarget)
@@ -59,7 +61,7 @@ export function Youtube({
         playerVars: {
           modestbranding: 1,
           // fs: 0,
-          // controls: 0,
+          controls: showControls ? 1 : 0,
           rel: 0,
           disablekb: 1,
         },
