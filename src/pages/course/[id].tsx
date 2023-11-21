@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router'
 import { useEffect } from 'react'
-import PastLinkVideo from '../../components/pastLinkVideo'
 import Video from '../../components/Video'
+import PastLinkVideo from '../../components/pastLinkVideo'
 import CreateButton from '../../core/CreateButton'
 import DeleteButton from '../../core/DeleteButton'
 import EditButton from '../../core/EditButton'
@@ -53,12 +53,12 @@ export default function Course() {
   const vidData = currentLesson
 
   return (
-    <div className="w-full min-h-[92.6vh] flex justify-center gap-6 p-6 flex-wrap bg-zinc-900">
+    <div className="w-full h-[91.5vh] flex justify-center gap-6 p-6 flex-wrap bg-zinc-900">
       <section className="flex flex-1 h-fit flex-wrap shadow-sm rounded-md justify-center overflow-hidden p-4">
         <Video lessonData={vidData} />
       </section>
-      <section className="flex flex-[0.3] p-6 flex-col gap-5 bg-zinc-800 rounded-xl overflow-auto">
-        <div className="flex gap-4 w-full justify-between">
+      <section className="flex flex-[0.3] h-[85vh] p-6 flex-col gap-5 bg-zinc-800 rounded-xl overflow-auto">
+        <header className="flex gap-4 w-full justify-between">
           <CreateButton
             data={{
               videoId: { type: 'text' },
@@ -103,63 +103,64 @@ export default function Course() {
               })
             }}
           />
-        </div>
+        </header>
+        <main className="flex flex-col gap-4">
+          {lessons.map((v, i) => (
+            <div
+              key={i}
+              onClick={() => setCurrentLesson(lessons[i])}
+              className={`rounded-xl ${
+                vidData.id === v.id ? 'bg-slate-900' : 'bg-zinc-700'
+              }  overflow-hidden  hover:bg-slate-800 hover:cursor-pointer transition-all hover:scale-105 flex gap-2 items-center group `}
+            >
+              <DeleteButton onDelete={() => deleteLesson(v.id)} />
+              <EditButton
+                title="Editar Aula"
+                data={{
+                  videoId: { type: 'text' },
+                  name: { type: 'text' },
+                }}
+                onSubmit={(v: any) => {
+                  updateLesson(v.id, v)
+                }}
+              />
 
-        {lessons.map((v, i) => (
-          <div
-            key={i}
-            onClick={() => setCurrentLesson(lessons[i])}
-            className={`rounded-xl ${
-              vidData.id === v.id ? 'bg-slate-900' : 'bg-zinc-700'
-            }  overflow-hidden  hover:bg-slate-800 hover:cursor-pointer transition-all hover:scale-105 flex gap-2 items-center group `}
-          >
-            <DeleteButton onDelete={() => deleteLesson(v.id)} />
-            <EditButton
-              title="Editar Aula"
-              data={{
-                videoId: { type: 'text' },
-                name: { type: 'text' },
-              }}
-              onSubmit={(v: any) => {
-                updateLesson(v.id, v)
-              }}
-            />
-
-            <span className="bg-zinc-600/50 h-full w-7 flex justify-center items-center font-bold">
-              {i + 1}
-            </span>
-            <div className="p-2 flex gap-3  w-full">
-              <div className="w-24">
-                <img
-                  src={`https://img.youtube.com/vi/${v.videoId}/sddefault.jpg`}
-                  alt=""
-                />
-              </div>
-              <div className="flex flex-col gap-4 w-full">
-                <div className=" ">{v.name}</div>
-                <div className="flex gap-4">
-                  <div>{getDurationStr(v.startTime, v.endTime)}</div>
-                  <div className="h-4 w-[95%] bg-zinc-500 rounded-lg overflow-hidden">
-                    <div
-                      className=" h-full bg-blue-400"
-                      style={{
-                        width:
-                          typeof v.progressPercent === 'number'
-                            ? v.progressPercent * 100 + '%'
-                            : '0%',
-                      }}
-                    ></div>
+              <span className="bg-zinc-600/50 h-full w-7 flex justify-center items-center font-bold">
+                {i + 1}
+              </span>
+              <div className="p-2 flex gap-3  w-full">
+                <div className="w-24">
+                  <img
+                    src={`https://img.youtube.com/vi/${v.videoId}/sddefault.jpg`}
+                    alt=""
+                  />
+                </div>
+                <div className="flex flex-col gap-4 w-full">
+                  <div className=" ">{v.name}</div>
+                  <div className="flex gap-4">
+                    <div>{getDurationStr(v.startTime, v.endTime)}</div>
+                    <div className="h-4 w-[95%] bg-zinc-500 rounded-lg overflow-hidden">
+                      <div
+                        className=" h-full bg-blue-400"
+                        style={{
+                          width:
+                            typeof v.progressPercent === 'number'
+                              ? v.progressPercent * 100 + '%'
+                              : '0%',
+                        }}
+                      ></div>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
+          ))}
+          <div>
+            {loading && (
+              <div className="self-center px-20 text-3xl">Loading...</div>
+            )}
           </div>
-        ))}
-        <div>
-          {loading && (
-            <div className="self-center px-20 text-3xl">Loading...</div>
-          )}
-        </div>
+        </main>
       </section>
       {/* <div>{JSON.stringify(currentLesson)}</div> */}
     </div>

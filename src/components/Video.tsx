@@ -59,8 +59,18 @@ export default function Video({ lessonData }: Props) {
           startTime: lessonData.startTime,
           endTime: lessonData.endTime,
         })
+        console.log({ timeByPercent })
+        if (timeByPercent && lessonData.endTime) {
+          const time =
+            timeByPercent > lessonData.endTime - 10
+              ? lessonData.startTime
+              : timeByPercent
 
-        videoTarget.seekTo(timeByPercent || lessonData.startTime, true)
+          videoTarget.seekTo(time, true)
+        } else {
+          videoTarget.seekTo(lessonData.startTime, true)
+        }
+
         videoTarget.playVideo()
       }
     } catch (error) {}

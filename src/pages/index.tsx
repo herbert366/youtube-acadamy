@@ -2,8 +2,8 @@ import Link from 'next/link'
 import DeleteButton from '../core/DeleteButton'
 import EditButton from '../core/EditButton'
 
-import { useCourses } from '../hooks/useCourses'
 import Poster from '../components/Poster'
+import { useCourses } from '../hooks/useCourses'
 interface Props {}
 
 export default function Home({}: Props) {
@@ -35,8 +35,15 @@ export default function Home({}: Props) {
                 }}
               />
               <Link href={'/course/' + course.id}>
-                <div className="w-52 bg-slate-700 min-h-full text-xl">
-                  <img src={course.poster} alt="" className="w-full" />
+                <div className="w-52 bg-slate-700 min-h-full text-xl flex flex-col">
+                  <img
+                    src={
+                      course.poster ||
+                      'https://th.bing.com/th/id/OIP.2I5m3mAT8uztVwT80eKHggHaEK?rs=1&pid=ImgDetMain'
+                    }
+                    alt=""
+                    className="w-full h-full min-h-full object-cover flex-1"
+                  />
                   <div
                     className="flex justify-center items-center   text-center  rounded-xl"
                     key={i}
