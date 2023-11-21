@@ -85,8 +85,10 @@ export default function Video({ lessonData }: Props) {
         showControls={lessonData?.endTime ? false : true}
         onCurrentTimeChange={async currentTime => {
           let videoEndTime = lessonData?.endTime
+          let isCutVideo = true
 
           if (!videoEndTime) {
+            isCutVideo = false
             const duration = (await videoTarget?.getDuration()) || 0
             videoEndTime = duration
           }
@@ -107,10 +109,10 @@ export default function Video({ lessonData }: Props) {
           })
           console.log({ _newInputValue })
           const newInputValueRound = Number(_newInputValue.toFixed(2))
-          // if (currentTime >= videoEndTime) {
-          //   videoTarget?.pauseVideo()
-          //   videoTarget?.seekTo(videoEndTime, true)
-          // }
+          if (isCutVideo && currentTime >= videoEndTime) {
+            videoTarget?.pauseVideo()
+            // videoTarget?.seekTo(videoEndTime, true)
+          }
           const no = !lessonData.progressPercent && newInputValueRound === 1
           if (!no) setInputControlValue(_newInputValue * 100)
         }}
