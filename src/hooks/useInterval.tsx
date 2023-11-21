@@ -14,7 +14,7 @@ export function useSaveProgressDataBase() {
       const changed = lessonData.progressPercent !== newInputValueRound
 
       if (inputControlValue && changed) {
-        console.log({ inputControlValue, changed })
+        // console.log({ inputControlValue, changed })
         updateLesson(lessonData.id, {
           progressPercent: newInputValueRound / 100,
         })

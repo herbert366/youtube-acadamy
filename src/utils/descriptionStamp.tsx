@@ -47,6 +47,7 @@ export function convertLongVideoToCourseData({
     }
   })
 
+  debugger
   return dataTimeWithEndTime
 }
 

@@ -60,7 +60,6 @@ export default function Video({ lessonData }: Props) {
           startTime: lessonData.startTime,
           endTime: lessonData.endTime,
         })
-        console.log({ timeByPercent })
         if (timeByPercent && lessonData.endTime) {
           const time =
             timeByPercent > lessonData.endTime - 10
@@ -107,9 +106,13 @@ export default function Video({ lessonData }: Props) {
             startTime: lessonData.startTime || 0,
             endTime: videoEndTime,
           })
-          console.log({ _newInputValue })
           const newInputValueRound = Number(_newInputValue.toFixed(2))
-          if (isCutVideo && currentTime >= videoEndTime) {
+
+          if (
+            isCutVideo &&
+            currentTime >= videoEndTime &&
+            currentTime < videoEndTime + 10
+          ) {
             videoTarget?.pauseVideo()
             // videoTarget?.seekTo(videoEndTime, true)
           }
