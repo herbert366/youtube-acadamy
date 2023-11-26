@@ -22,19 +22,28 @@ export function convertLongVideoToCourseData({
   descriptionTime,
   course_id,
 }: ConvertLongVideoProps) {
-  const data = descriptionTime
-    .split('\n')
-    .filter(Boolean)
-    .map(str => {
-      const [time, title] = str.match(/([\d\:]+|.*)/g) as string[]
+  // Padrão para extrair o tempo e o título
+  const padrao = /(\d+:\d+:\d+|\d+:\d+)(?: - )?(.+?)(?=\d+:|$)/g
 
-      return {
-        name: title.trim(),
-        startTime: textTimeToSec(time),
-        videoId,
-        course_id,
-      }
+  // Array para armazenar os resultados
+  const data: {
+    name: string
+    startTime: number
+    course_id: _Course['id']
+    videoId: string
+  }[] = []
+
+  let match
+  while ((match = padrao.exec(descriptionTime)) !== null) {
+    const time = match[1]
+    const title = match[2]
+    data.push({
+      startTime: textTimeToSec(time),
+      name: title.trim(),
+      course_id: Number(course_id),
+      videoId,
     })
+  }
 
   const dataTimeWithEndTime = data.map((d, i) => {
     const nextStartTime = data[i + 1]?.startTime
@@ -47,7 +56,7 @@ export function convertLongVideoToCourseData({
     }
   })
 
-  debugger
+  console.log(dataTimeWithEndTime)
   return dataTimeWithEndTime
 }
 

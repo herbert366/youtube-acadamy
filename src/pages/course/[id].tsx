@@ -80,7 +80,7 @@ export default function Course() {
             onSubmit={(v: any) => {
               const lessons = convertLongVideoToCourseData({
                 videoId: v.videoId,
-                descriptionTime: v.descriptionStamp.replace(/\s(\d)/g, '\n$1'),
+                descriptionTime: v.descriptionStamp, //'00:00 - Intro 08:44 - Lecture 1 38:04 - Lecture 2 1:26:33 - Lecture 3 1:58:14 - Lecture 4 10:01:50 - Lecture 10 (1) 11:15:36 - Lecture 10 (2) 10:01:50 Lecture 10 (1) 11:15:36 Lecture 10 (2)',
                 course_id: v.course_id,
               })
 
